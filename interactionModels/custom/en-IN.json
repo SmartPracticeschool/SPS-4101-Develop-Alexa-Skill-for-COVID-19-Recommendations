@@ -1,0 +1,137 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "covid guide",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "HelloWorldIntent",
+          "slots": [],
+          "samples": [
+            "hello",
+            "how are you",
+            "say hi world",
+            "say hi",
+            "hi",
+            "say hello world",
+            "say hello"
+          ]
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": []
+        },
+        {
+          "name": "addPerson",
+          "slots": [
+            {
+              "name": "PersonName",
+              "type": "AMAZON.Person"
+            },
+            {
+              "name": "PersonTemperature",
+              "type": "AMAZON.NUMBER"
+            },
+            {
+              "name": "PersonAge",
+              "type": "AMAZON.NUMBER"
+            }
+          ],
+          "samples": [
+            "My name {PersonName} age  {PersonAge} temperature {PersonTemperature}",
+            "This is {PersonName} age {PersonAge} temperature {PersonTemperature}",
+            "Myself {PersonName} age {PersonAge} temperature {PersonTemperature}",
+            "Name {PersonName} age {PersonAge} temperature {PersonTemperature}",
+            "My name is {PersonName} age {PersonAge} temperature {PersonTemperature}",
+            "I am {PersonName} age {PersonAge} temperature {PersonTemperature}"
+          ]
+        },
+        {
+          "name": "addName",
+          "slots": [
+            {
+              "name": "personName",
+              "type": "AMAZON.Person"
+            }
+          ],
+          "samples": [
+            "Myself {personName}",
+            "I am {personName} ",
+            "My name is  {personName}",
+            "Name is {personName}",
+            "This is {personName}"
+          ]
+        },
+        {
+          "name": "severeCondition",
+          "slots": [],
+          "samples": [
+            "I have Shortness of breath",
+            "I have Persistent pain or pressure in the chest",
+            "I have running nose",
+            "I have loss of smell and taste",
+            "I have head and body ache",
+            "I have breathing difficulty",
+            "I have high fever",
+            "I have trouble in breathing"
+          ]
+        },
+        {
+          "name": "mildCondition",
+          "slots": [],
+          "samples": [
+            "I have sore throat",
+            "I have cough",
+            "I have mild fever",
+            "I am having mild illness",
+            "I have headache"
+          ]
+        },
+        {
+          "name": "healthyCondition",
+          "slots": [],
+          "samples": [
+            "I am healthy",
+            "I am fine",
+            "I feel healthy",
+            "I am happy",
+            "I am great",
+            "I am good",
+            "I am all right"
+          ]
+        },
+        {
+          "name": "addAge",
+          "slots": [
+            {
+              "name": "PersonAge",
+              "type": "AMAZON.NUMBER"
+            },
+            {
+              "name": "PersonTemperature",
+              "type": "AMAZON.NUMBER"
+            }
+          ],
+          "samples": [
+            "My age is {PersonAge} temperature is {PersonTemperature}",
+            "temperature {PersonTemperature} age {PersonAge}",
+            "age {PersonAge} temperature {PersonTemperature}"
+          ]
+        }
+      ],
+      "types": []
+    }
+  },
+  "version": "12"
+}
