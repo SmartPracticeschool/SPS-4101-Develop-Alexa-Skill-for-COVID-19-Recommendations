@@ -31,6 +31,9 @@
       "distributionCountries": [],
       "isAvailableWorldwide": true,
       "locales": {
+        "en-US": {
+          "name": "covid guide"
+        },
         "en-IN": {
           "description": "Sample Full Description",
           "examplePhrases": [
@@ -40,7 +43,7 @@
           ],
           "keywords": [],
           "name": "covid guide",
-          "summary": "Sample Short Description"
+          "summary": "Alexa skill for covid 19 recommendations - Sharmila S"
         }
       },
       "testingInstructions": "Sample Testing Instructions."
