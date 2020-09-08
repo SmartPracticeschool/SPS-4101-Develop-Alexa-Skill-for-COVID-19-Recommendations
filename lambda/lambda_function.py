@@ -63,34 +63,37 @@ class AddPersonIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        personName = get_slot_value(handler_input=handler_input, slot_name="PersonName")
-        personAge = get_slot_value(handler_input=handler_input, slot_name="PersonAge")
-        personTemperature = get_slot_value(handler_input=handler_input, slot_name="PersonTemperature")
+        person_Name = get_slot_value(handler_input=handler_input, slot_name="personName")
+        person_Age = get_slot_value(handler_input=handler_input, slot_name="personAge")
+        person_Temperature = get_slot_value(handler_input=handler_input, slot_name="personTemperature")
         
-        url="https://bt08c81y66.execute-api.us-east-1.amazonaws.com/covid?Name={}&Age={}&Temperature={}".format(personName, personAge, personTemperature)
+        url="https://bt08c81y66.execute-api.us-east-1.amazonaws.com/covidguided?Name="+str(person_Name)+"&Age="+str(person_Age)+"&Temperature="+ str(person_Temperature)
         response = requests.get(url)
-        speak_output = "Person name added! Hi! {}. How do you feel now?".format(personName)
+        speak_output = "Person name added! Hi! {}. How do you feel now?".format(person_Name)
 
         return (
             handler_input.response_builder
                 .speak(speak_output)
-                .ask(speak_output)
                 # .ask("add a reprompt if you want to keep the session open for the user to respond")
                 .response
         )
-class AddNameIntentHandler(AbstractRequestHandler):
+
+
+class NationalCasesIntentHandler(AbstractRequestHandler):
     """Handler for Hello World Intent."""
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
-        return ask_utils.is_intent_name("addName")(handler_input)
+        return ask_utils.is_intent_name("nationalCases")(handler_input)
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        personName = get_slot_value(handler_input=handler_input, slot_name="PersonName")
-        
-        url="https://bt08c81y66.execute-api.us-east-1.amazonaws.com/covid?Name="+ str(personName)
-        response = requests.get(url)
-        speak_output = "Added Name! Enter your age and temperature!".format(personName)
+        response = requests.get("https://api.covid19india.org/data.json")
+        if(response.status_code == 200):
+            parsed_data = json.loads(response.text)
+            speak_output = "In India, there are {} total confirmed cases out of which {} are active and {} deaths so far. And for today, {} fresh cases confirmed, {} people recovered and {} deaths reported today".format(parsed_data["statewise"][0]["confirmed"], parsed_data["statewise"][0]["active"], parsed_data["statewise"][0]["deaths"], parsed_data[
+"cases_time_series"][-1]["dailyconfirmed"], parsed_data["cases_time_series"][-1]["dailyrecovered"], parsed_data["cases_time_series"][-1]["dailydeceased"])
+        else:
+            speak_output = "Sorry! Couldn't reach for servers, try again after some time!"
 
         return (
             handler_input.response_builder
@@ -100,30 +103,7 @@ class AddNameIntentHandler(AbstractRequestHandler):
                 .response
         )
 
-class AddAgeIntentHandler(AbstractRequestHandler):
-    """Handler for Hello World Intent."""
-    def can_handle(self, handler_input):
-        # type: (HandlerInput) -> bool
-        return ask_utils.is_intent_name("addAge")(handler_input)
 
-    def handle(self, handler_input):
-        # type: (HandlerInput) -> Response
-        personName = get_slot_value(handler_input=handler_input, slot_name="PersonName")
-        personAge = get_slot_value(handler_input=handler_input, slot_name="PersonAge")
-        personTemperature = get_slot_value(handler_input=handler_input, slot_name="PersonTemperature")
-        
-        url="https://bt08c81y66.execute-api.us-east-1.amazonaws.com/covid?Name={}&Age={}&Temperature={}".format(personName, personAge, personTemperature)
-        response = requests.get(url)
-        speak_output = "Added Details! Now {}, Tell me how do you feel?".format(personName)
-        
-
-        return (
-            handler_input.response_builder
-                .speak(speak_output)
-                .ask(speak_output)
-                # .ask("add a reprompt if you want to keep the session open for the user to respond")
-                .response
-        )
 
 class SevereConditionIntentHandler(AbstractRequestHandler):
     """Handler for Hello World Intent."""
@@ -278,10 +258,10 @@ class CatchAllExceptionHandler(AbstractExceptionHandler):
 sb = SkillBuilder()
 
 sb.add_request_handler(AddPersonIntentHandler())
-sb.add_request_handler(AddNameIntentHandler())
 sb.add_request_handler(SevereConditionIntentHandler())
 sb.add_request_handler(HealthyConditionIntentHandler())
 sb.add_request_handler(MildConditionIntentHandler())
+sb.add_request_handler(NationalCasesIntentHandler())
 sb.add_request_handler(LaunchRequestHandler())
 sb.add_request_handler(HelloWorldIntentHandler())
 sb.add_request_handler(HelpIntentHandler())
