@@ -36,41 +36,31 @@
           "name": "addPerson",
           "slots": [
             {
-              "name": "PersonName",
-              "type": "AMAZON.Person"
-            },
-            {
-              "name": "PersonTemperature",
-              "type": "AMAZON.NUMBER"
-            },
-            {
-              "name": "PersonAge",
-              "type": "AMAZON.NUMBER"
-            }
-          ],
-          "samples": [
-            "My name {PersonName} age  {PersonAge} temperature {PersonTemperature}",
-            "This is {PersonName} age {PersonAge} temperature {PersonTemperature}",
-            "Myself {PersonName} age {PersonAge} temperature {PersonTemperature}",
-            "Name {PersonName} age {PersonAge} temperature {PersonTemperature}",
-            "My name is {PersonName} age {PersonAge} temperature {PersonTemperature}",
-            "I am {PersonName} age {PersonAge} temperature {PersonTemperature}"
-          ]
-        },
-        {
-          "name": "addName",
-          "slots": [
-            {
               "name": "personName",
               "type": "AMAZON.Person"
+            },
+            {
+              "name": "personAge",
+              "type": "AMAZON.NUMBER",
+              "samples": [
+                "age is {personAge}",
+                "{personAge}"
+              ]
+            },
+            {
+              "name": "personTemperature",
+              "type": "AMAZON.NUMBER",
+              "samples": [
+                "{personTemperature}"
+              ]
             }
           ],
           "samples": [
-            "Myself {personName}",
-            "I am {personName} ",
-            "My name is  {personName}",
-            "Name is {personName}",
-            "This is {personName}"
+            "This is {personName} age {personAge} temperature {personTemperature}",
+            "Myself {personName} age {personAge} temperature {personTemperature}",
+            "Name {personName} age {personAge} temperature {personTemperature}",
+            "My name is {personName}  age is {personAge} temperature {personTemperature}",
+            "I am {personName} age {personAge} temperature {personTemperature}"
           ]
         },
         {
@@ -102,36 +92,101 @@
           "name": "healthyCondition",
           "slots": [],
           "samples": [
-            "I am healthy",
-            "I am fine",
-            "I feel healthy",
-            "I am happy",
-            "I am great",
-            "I am good",
-            "I am all right"
+            "I feel great",
+            "I feel healthy"
           ]
         },
         {
-          "name": "addAge",
-          "slots": [
-            {
-              "name": "PersonAge",
-              "type": "AMAZON.NUMBER"
-            },
-            {
-              "name": "PersonTemperature",
-              "type": "AMAZON.NUMBER"
-            }
-          ],
+          "name": "nationalCases",
+          "slots": [],
           "samples": [
-            "My age is {PersonAge} temperature is {PersonTemperature}",
-            "temperature {PersonTemperature} age {PersonAge}",
-            "age {PersonAge} temperature {PersonTemperature}"
+            "Covid in India",
+            "Corona in India",
+            "What\u0027s the numbers in India",
+            "Positive cases in India",
+            "Total cases in India"
           ]
         }
       ],
       "types": []
-    }
+    },
+    "dialog": {
+      "intents": [
+        {
+          "name": "addPerson",
+          "confirmationRequired": true,
+          "prompts": {
+            "confirmation": "Confirm.Intent.1228607343454"
+          },
+          "slots": [
+            {
+              "name": "personName",
+              "type": "AMAZON.Person",
+              "elicitationRequired": false,
+              "confirmationRequired": false,
+              "prompts": {}
+            },
+            {
+              "name": "personAge",
+              "type": "AMAZON.NUMBER",
+              "elicitationRequired": true,
+              "confirmationRequired": false,
+              "prompts": {
+                "elicitation": "Elicit.Slot.1390289848597.1269861147864"
+              }
+            },
+            {
+              "name": "personTemperature",
+              "type": "AMAZON.NUMBER",
+              "elicitationRequired": true,
+              "confirmationRequired": false,
+              "prompts": {
+                "elicitation": "Elicit.Slot.1390289848597.1413490864968"
+              }
+            }
+          ]
+        }
+      ],
+      "delegationStrategy": "ALWAYS"
+    },
+    "prompts": [
+      {
+        "id": "Confirm.Intent.1228607343454",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Are you sure, {personName} ?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.1390289848597.610382653509",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Name please."
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.1390289848597.1413490864968",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Temperature please"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.1390289848597.1269861147864",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Age please."
+          }
+        ]
+      }
+    ]
   },
-  "version": "12"
+  "version": "25"
 }
